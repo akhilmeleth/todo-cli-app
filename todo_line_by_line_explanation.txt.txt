@@ -1,0 +1,179 @@
+Line-by-Line Explanation: To-Do List CLI App
+
+ 
+
+🔷 class Task:
+
+We define a class named Task – like a mold to create task objects.
+
+ 
+
+🔷 def __init__(self, title, completed=False):
+
+This is a constructor — it runs automatically when we create a new task.
+
+ 
+
+    self.title = title → saves the task name
+
+    self.completed = completed → saves whether the task is done (default is False)
+
+ 
+
+🔷 def mark_done(self):
+
+This is a method (a function inside a class).
+
+When called, it sets self.completed = True → it marks the task as done.
+
+ 
+
+🔷 def __str__(self):
+
+This tells Python how to display the task when we print it.
+
+    status = "✓" if self.completed else "✗"
+
+If task is done → show ✓
+
+If not done → show ✗
+
+Then we return something like:
+
+    [✓] Buy milk
+
+ 
+
+🔷 def to_line(self):
+
+This turns the task into a line that can be saved to a file.
+
+Returns something like:
+
+    Buy milk|False
+
+ 
+
+🔷 @staticmethod
+
+This means the next function doesn't need self.
+
+ 
+
+🔷 def from_line(line):
+
+It takes a line from the file (Buy milk|False) and converts it back to a Task object.
+
+    title, completed = line.strip().split("|")
+
+Splits the line at the pipe |:
+
+    title = Buy milk
+
+    completed = False
+
+Returns:
+
+    Task(title, completed == "True")
+
+ 
+
+🔷 FILENAME = "tasks.txt"
+
+This is the name of the file where tasks will be saved.
+
+ 
+
+🔷 def load_tasks():
+
+This function reads tasks from the file and returns a list of Task objects.
+
+If the file doesn’t exist (FileNotFoundError), it returns an empty list.
+
+ 
+
+🔷 def save_tasks(tasks):
+
+This writes all tasks to the file.
+
+For each task, it calls task.to_line() and saves that as a line.
+
+ 
+
+🔷 def show_tasks(tasks):
+
+This prints the current list of tasks to the screen.
+
+If there are no tasks: "No tasks yet."
+
+If there are tasks: it prints each one, numbered 1, 2, 3...
+
+ 
+
+🔷 def main():
+
+This is the main part of the program. It shows the menu and waits for the user’s input.
+
+    tasks = load_tasks()  → Loads the tasks from file when the app starts
+
+Then we go into a while True: loop which keeps running until you choose to exit.
+
+ 
+
+🔷 Menu Options:
+
+    print("1. Add Task")
+
+    print("2. View Tasks")
+
+    print("3. Mark Task as Done")
+
+    print("4. Exit")
+
+The user types 1, 2, 3, or 4.
+
+Then we do different things based on their choice:
+
+ 
+
+🟢 If choice == "1":
+
+- Ask for a task name
+
+- Create a Task object
+
+- Add it to the task list
+
+- Save it to the file
+
+ 
+
+🟡 If choice == "2":
+
+- Show the current list of tasks using show_tasks()
+
+ 
+
+🔵 If choice == "3":
+
+- First show the tasks
+
+- Ask which number task to mark as done
+
+- If the number is valid, call mark_done() on it
+
+- Save the updated list
+
+ 
+
+🔴 If choice == "4":
+
+- Exit the loop and print "Goodbye!"
+
+ 
+
+🔷 if __name__ == "__main__":
+
+This line means:
+
+Only run main() if this file is being run directly.
